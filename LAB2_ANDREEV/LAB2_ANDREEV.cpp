@@ -7,12 +7,9 @@ using namespace std;
 int main() {
     int i = 0;
     string input;
-    //map<int, cs> Css;
-    bool pipeExists = false;
-    bool csExists = false;
 
     while (true) {
-        cout << "1. Add a pipe\n2. Add CS\n3. View all objects\n4. Edit the pipe\n5. Edit the CS\n6. Save\n7. Upload\n0. Exit\n" << endl;
+        cout << "1. Add a pipe\n2. Add CS\n3. View all objects\n4. Find a pipe\n5. Find a CS\n6. Edit a pipe\n7. Edit a CS\n8. Save\n9. Upload\n0. Exit\n" << endl;
         getline(cin, input);
         if (isInteger(input)) {
             int choose;
@@ -23,37 +20,41 @@ int main() {
             }
             case 1: {
                 addNewPipe(i);
-                //cout << "Add a pipe\n" << endl;
-                //Pipe = createPipe(pipeExists, Pipe);
-                i++;
                 break;
             }
             case 2: {
-                //cout << "Add a CS" << endl;
-                //Cs = createCs(csExists, Cs);
+                //addNewCs(i);
                 break;
             }
             case 3: {
                 showPipes();
-                //showCs(Cs, csExists);
+                //showCss();
                 break;
             }
             case 4: {
-                editPipe();
-                //editPipe(Pipe, pipeExists);
+                filterPipe();
                 break;
             }
             case 5: {
-                //cout << "Edit the compressor station" << endl;
-                //editCs(Cs, csExists);
+                //filterCs();
                 break;
             }
             case 6: {
+                editPipe();
                 //cout << "Save" << endl;
                 //save(Pipe, Cs, pipeExists, csExists);
                 break;
             }
             case 7: {
+                //editCs();
+                break;
+            }
+            case 8: {
+                //cout << "Load" << endl;
+                //load(Pipe, Cs, pipeExists, csExists);
+                break;
+            }
+            case 9: {
                 //cout << "Load" << endl;
                 //load(Pipe, Cs, pipeExists, csExists);
                 break;

@@ -32,7 +32,9 @@ public:
 
 extern map<int, pipe> Pipes;
 
+void pipeInfo(int id, const pipe p);
 void showPipes();
 void editPipe();
-void addNewPipe(int i);
+void addNewPipe(int& i);
 bool isInteger(string const& str);
+void filterPipe();
