@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include <fstream>
+ #include <fstream>
 #include "pipe.h"
 #include "cs.h"
 #include "file.h"
@@ -8,15 +8,17 @@ using namespace std;
 int main() {
     int pipeId = 0, csId = 0;
     string input;
-
+    initLog("log.txt");
     while (true) {
         cout << "1. Add a pipe\n2. Add CS\n3. View all objects\n4. Find a pipe\n5. Find a CS\n6. Edit a pipe\n7. Edit a CS\n8. Save\n9. Upload\n0. Exit\n" << endl;
         getline(cin, input);
+        logMessage(input);
         if (isInteger(input)) {
             int choose;
             choose = stoi(input);
             switch (choose) {
             case 0: {
+                closeLog();
                 return 0;
             }
             case 1: {
@@ -49,7 +51,7 @@ int main() {
                 break;
             }
             case 8: {
-                //load(Pipe, Cs, pipeExists, csExists);
+                save();
                 break;
             }
             case 9: {

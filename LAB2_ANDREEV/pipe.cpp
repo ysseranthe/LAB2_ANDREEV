@@ -1,5 +1,5 @@
 #include "pipe.h"
-
+#include "file.h"
 map<int, pipe> Pipes;
 
 pipe::pipe()
@@ -95,17 +95,21 @@ void filterPipe() {
         while (true) {
             cout << "1. Filtration by name\n2. Filtration by repair status\n" << endl;
             getline(cin, choose);
-
+            logMessage(choose);
             if (isInteger(choose) && (stoi(choose) == 1 || stoi(choose) == 2)) {
                 if (stoi(choose) == 1) {
                     cout << "Enter the text:" << endl;
                     getline(cin, input);
+                    logMessage(input);
+
                     foundId = filterByName(input);
                 }
                 else {
                     while (true) {
                         cout << "Enter the repair status of the pipe (y/n):" << endl;
                         getline(cin, input);
+                        logMessage(input);
+
                         if (input == "y" || input == "n") {
                             foundId = filterByRepair(input);
                             break;
@@ -117,10 +121,14 @@ void filterPipe() {
                 }
                 cout << "1. Edit repair status." << endl << "2. Delete." << endl << "Any other key to exit" << endl;
                 getline(cin, choose);
+                logMessage(choose);
+
                 if (isInteger(choose) && (stoi(choose) == 1 || stoi(choose) == 2)) {
                     if (stoi(choose) == 1) {
                         cout << "Enter the pipe(s) id by space or nothing to select the found ones:" << endl;
                         getline(cin, input);
+                        logMessage(input);
+
                         istringstream iss(input.empty() ? foundId : input);
                         while (iss >> inputId) {
                             if (isInteger(inputId) && Pipes.find(stoi(inputId)) != Pipes.end()) {
@@ -135,6 +143,8 @@ void filterPipe() {
                     else if (stoi(choose) == 2) {
                         cout << "Enter the pipe(s) id by space or nothing to select the found ones:" << endl;
                         getline(cin, input);
+                        logMessage(input);
+
                         istringstream iss(input.empty() ? foundId : input);
                         while (iss >> inputId) {
                             if (isInteger(inputId) && Pipes.find(stoi(inputId)) != Pipes.end()) {
@@ -167,10 +177,14 @@ void addNewPipe(int& i)
     //Pipes[i] = pipe()
     cout << "Enter the name of the pipe:" << endl;
     getline(cin, inputName);
+    logMessage(inputName);
+
 
     cout << "Enter the length:" << endl;
     while (true) {
         getline(cin, input);
+        logMessage(input);
+
         if (isInteger(input) && stoi(input) > 0) {
             length = stoi(input);
             break;
@@ -183,6 +197,8 @@ void addNewPipe(int& i)
     cout << "Enter the diameter:" << endl;
     while (true) {
         getline(cin, input);
+        logMessage(input);
+
         if (isInteger(input) && stoi(input) > 0) {
             diameter = stoi(input);
             break;
@@ -195,6 +211,8 @@ void addNewPipe(int& i)
     cout << "Is the pipe under repair?(y/n):" << endl;
     while (true) {
         getline(cin, input);
+        logMessage(input);
+
         if (input == "y") {
             repair = true;
             break;
@@ -240,10 +258,14 @@ void editPipe() {
         while (true) {
             cout << "1. Change repair status of a pipe\n2. Delete a pipe\n" << endl;
             getline(cin, choose);
+            logMessage(choose);
+
             if (isInteger(choose) && (stoi(choose) == 1 || stoi(choose) == 2)) {
                 if (stoi(choose) == 1) {
                     cout << "Enter the pipe(s) by space:" << endl;
                     getline(cin, input);
+                    logMessage(input);
+
                     istringstream iss(input);
                     while (iss >> inputId) {
                         if (isInteger(inputId) && Pipes.find(stoi(inputId)) != Pipes.end()) {
@@ -257,6 +279,8 @@ void editPipe() {
                 else {
                     cout << "Enter the pipe(s) by space:" << endl;
                     getline(cin, input);
+                    logMessage(input);
+
                     istringstream iss(input);
                     while (iss >> inputId) {
                         if (isInteger(inputId) && Pipes.find(stoi(inputId)) != Pipes.end()) {

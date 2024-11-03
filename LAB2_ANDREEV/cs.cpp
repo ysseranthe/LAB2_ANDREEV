@@ -1,5 +1,5 @@
 #include "cs.h"
-
+#include "file.h"
 map<int, cs> Css;
 
 cs::cs()
@@ -62,10 +62,13 @@ void addNewCs(int& i)
 
     cout << "Enter the name of the compressor station:" << endl;
     getline(cin, inputName);
+    logMessage(inputName);
 
     cout << "Enter the number of workshops:" << endl;
     while (true) {
         getline(cin, input);
+        logMessage(input);
+
         if (isInteger(input) && stoi(input) > 0) {
             numberOfWorkshops = stoi(input);
             break;
@@ -78,6 +81,8 @@ void addNewCs(int& i)
     cout << "Enter the number of workshops in operation:" << endl;
     while (true) {
         getline(cin, input);
+        logMessage(input);
+
         if (isInteger(input) && stoi(input) >= 0 && numberOfWorkshops >= stoi(input)) {
             workshopsInOperation = stoi(input);
             break;
@@ -90,6 +95,8 @@ void addNewCs(int& i)
     cout << "Enter the efficiency:" << endl;
     while (true) {
         getline(cin, input);
+        logMessage(input);
+    
         if (isInteger(input) && stoi(input) > 0 && stoi(input) < 101) {
             efficiency = stoi(input);
             break;
@@ -144,14 +151,20 @@ void editCs() {
         while(true) {
             cout << "1. Change number of working workshops\n2. Delete a cs\n" << endl;
             getline(cin, input);
+            logMessage(input);
+
             if (isInteger(input) && (stoi(input) == 1 || stoi(input) == 2)) {
                 if (stoi(input) == 1) {
                     cout << "Enter cs id:" << endl;
                     getline(cin, id);
+                    logMessage(id);
+
                     if (isInteger(id) && Css.find(stoi(id)) != Css.end()) {
                         while (true) {
                             cout << "Enter a number of working workshops to change (- if you reduce it): " << endl;
                             getline(cin, input);
+                            logMessage(input);
+
                             if (isInteger(input) && stoi(input) >= -Css[stoi(id)].getWorkshopsInOperation() && stoi(input) + Css[stoi(id)].getWorkshopsInOperation() <= Css[stoi(id)].getNumberOfWorkshops()) {
                                 Css[stoi(id)].changeOperatingWorkshops(stoi(input));
                                 break;
@@ -169,6 +182,8 @@ void editCs() {
                 else {
                     cout << "Enter cs id:" << endl;
                     getline(cin, id);
+                    logMessage(id);
+
                     if (isInteger(id) && Css.find(stoi(id)) != Css.end()) {
                         Css.erase(stoi(id));
                         break;
@@ -196,17 +211,23 @@ void filterCs()
         while (true) {
             cout << "1. Filtration by name\n2. Filtration by percentage of unused workshops\n" << endl;
             getline(cin, choose);
+            logMessage(choose);
+
             if (isInteger(choose) && (stoi(choose) == 1 || stoi(choose) == 2)) {
                 if (isInteger(choose) && (stoi(choose) == 1 || stoi(choose) == 2)) {
                     if (stoi(choose) == 1) {
                         cout << "Enter the text:" << endl;
                         getline(cin, input);
+                        logMessage(input);
+
                         filterByCsName(input);
                     }
                     else {
                         while (true) {
                             cout << "Enter the percentage of unused workshops:" << endl;
                             getline(cin, input);
+                            logMessage(input);
+
                             if (isInteger(input) && 0 <= stoi(input) && stoi(input) <= 100) {
                                 filterByPercent(stoi(input));
                                 break;
