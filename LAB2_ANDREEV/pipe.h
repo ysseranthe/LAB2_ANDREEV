@@ -38,3 +38,5 @@ void editPipe();
 void addNewPipe(int& i);
 bool isInteger(string const& str);
 void filterPipe();
+string filterByName(string input);
+string filterByRepair(string input);

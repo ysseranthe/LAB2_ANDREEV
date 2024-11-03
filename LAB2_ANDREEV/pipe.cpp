@@ -65,63 +65,96 @@ bool isInteger(string const& str) {
 	return (iss >> num) && iss.eof();
 }
 
-void filterPipe()
-{
-    string choose, input;
+string filterByName(string input) {
+    string foundId;
+
+    for (const auto& item : Pipes) {
+        int id = item.first;
+        const pipe p = item.second;
+
+        if (Pipes[id].getPipeName().find(input) != string::npos) {
+            pipeInfo(id, p);
+            foundId += to_string(id) + " ";
+        }
+    }
+    return foundId;
+}
+
+string filterByRepair(string input) {
+    string foundId;
+    for (const auto& item : Pipes) {
+        int id = item.first;
+        const pipe p = item.second;
+        if (Pipes[id].isRepairing() == (input == "y" ? true : false)) {
+            pipeInfo(id, p);
+            foundId += to_string(id) + " ";
+        }
+    }
+    return foundId;
+}
+
+void filterPipe() {
+    string choose, input, foundId, inputId;
     if (Pipes.empty()) {
         cout << "There are no pipes." << endl;
     }
     else {
-        cout << "1. Filtration by name\n2. Filtration by repair status\n" << endl;
-
         while (true) {
+            cout << "1. Filtration by name\n2. Filtration by repair status\n" << endl;
             getline(cin, choose);
 
             if (isInteger(choose) && (stoi(choose) == 1 || stoi(choose) == 2)) {
-
                 if (stoi(choose) == 1) {
-                    cout << "Enter the text: " << endl;
+                    cout << "Enter the text:" << endl;
                     getline(cin, input);
-
-                    for (const auto& item : Pipes) {
-                        int id = item.first;
-                        const pipe p = item.second;
-
-                        if (Pipes[id].getPipeName().find(input) != string::npos) {
-                            pipeInfo(id, p);
-                        }
-                    }
-                    break;
+                    foundId = filterByName(input);
                 }
-
                 else {
-                    cout << "Is a pipe being repaired?? (y/n):" << endl;
                     while (true) {
+                        cout << "Enter the repair status of the pipe (y/n):" << endl;
                         getline(cin, input);
-                        if (input == "y") {
-                            for (const auto& item : Pipes) {
-                                int id = item.first;
-                                const pipe p = item.second;
-                                if (Pipes[id].isRepairing() == true) {
-                                    pipeInfo(id, p);
-                                }
-                            }
-                            break;
-                        }
-                        else if (input == "n") {
-                            for (const auto& item : Pipes) {
-                                int id = item.first;
-                                const pipe p = item.second;
-                                if (Pipes[id].isRepairing() == false) {
-                                    pipeInfo(id, p);
-                                }
-                            }
+                        if (input == "y" || input == "n") {
+                            foundId = filterByRepair(input);
                             break;
                         }
                         else {
                             cout << "(y/n)" << endl;
                         }
                     }
+                }
+                cout << "1. Edit repair status." << endl << "2. Delete." << endl << "Any other key to exit" << endl;
+                getline(cin, choose);
+                if (isInteger(choose) && (stoi(choose) == 1 || stoi(choose) == 2)) {
+                    if (stoi(choose) == 1) {
+                        cout << "Enter the pipe(s) id by space or nothing to select the found ones:" << endl;
+                        getline(cin, input);
+                        istringstream iss(input.empty() ? foundId : input);
+                        while (iss >> inputId) {
+                            if (isInteger(inputId) && Pipes.find(stoi(inputId)) != Pipes.end()) {
+                                Pipes[stoi(inputId)].setIsRepairing(!(Pipes[stoi(inputId)].isRepairing()));
+                            }
+                            else {
+                                cout << "Skipped invalid input: " << inputId << endl;
+                            }
+                        }
+                        break;
+                    }
+                    else if (stoi(choose) == 2) {
+                        cout << "Enter the pipe(s) id by space or nothing to select the found ones:" << endl;
+                        getline(cin, input);
+                        istringstream iss(input.empty() ? foundId : input);
+                        while (iss >> inputId) {
+                            if (isInteger(inputId) && Pipes.find(stoi(inputId)) != Pipes.end()) {
+                                Pipes.erase(stoi(inputId));
+                            }
+                            else {
+                                cout << "Skipped invalid input: " << inputId << endl;
+                            }
+                        }
+                        break;
+                    }
+                }
+                else {
                     break;
                 }
             }
@@ -201,66 +234,51 @@ void pipeInfo(int id, const pipe p) {
     cout << "Name: " << p.getPipeName() << endl;
     cout << "Length: " << p.getPipeLength() << endl;
     cout << "Diameter: " << p.getPipeDiameter() << endl;
-    cout << "Repair status: " << (p.isRepairing() ? "Yes" : "No") << endl;
+    cout << "Being repaired: " << (p.isRepairing() ? "Yes" : "No") << endl;
     cout << "-------------------------" << endl;
 }
 
 void editPipe() {
-    string choose, input;
-    if (!Pipes.empty()) {
-        cout << "1. Change repair status of a pipe\n2. Delete a pipe\n" << endl;
-
+    string choose, inputId, input;
+    if (Pipes.empty()) {
+        cout << "There are no pipes." << endl;
+    }
+    else {
         while (true) {
+            cout << "1. Change repair status of a pipe\n2. Delete a pipe\n" << endl;
             getline(cin, choose);
             if (isInteger(choose) && (stoi(choose) == 1 || stoi(choose) == 2)) {
                 if (stoi(choose) == 1) {
-                    cout << "Enter pipe ID: " << endl;
-                    while (true) {
-                        getline(cin, input);
-                        if (isInteger(input) && stoi(input) >= 0 && Pipes.find(stoi(input)) != Pipes.end()) {
-                            cout << "Change the repair status of the pipe?(y/n): " << endl;
-                            while (true) {
-                                getline(cin, input);
-                                if (input == "y") {
-                                    Pipes[stoi(input)].setIsRepairing(!(Pipes[stoi(input)].isRepairing()));
-                                    break;
-                                }
-                                else if (input == "n") {
-                                    break;
-                                }
-                                else {
-                                    cout << "(y/n)" << endl;
-                                }
-                            }
-                            break;
+                    cout << "Enter the pipe(s) by space:" << endl;
+                    getline(cin, input);
+                    istringstream iss(input);
+                    while (iss >> inputId) {
+                        if (isInteger(inputId) && Pipes.find(stoi(inputId)) != Pipes.end()) {
+                            Pipes[stoi(inputId)].setIsRepairing(!(Pipes[stoi(inputId)].isRepairing()));
                         }
                         else {
-                            cout << "The pipe does not exist." << endl;
+                            cout << "Skipped invalid input: " << inputId << endl;
                         }
                     }
-                    break;
                 }
                 else {
-                    cout << "Enter pipe ID to remove: " << endl;
-                    while (true) {
-                        getline(cin, input);
-                        if (isInteger(input) && stoi(input) >= 0 && Pipes.find(stoi(input)) != Pipes.end()) {
-                            Pipes.erase(stoi(input));
-                            break;
+                    cout << "Enter the pipe(s) by space:" << endl;
+                    getline(cin, input);
+                    istringstream iss(input);
+                    while (iss >> inputId) {
+                        if (isInteger(inputId) && Pipes.find(stoi(inputId)) != Pipes.end()) {
+                            Pipes.erase(stoi(inputId));
                         }
                         else {
-                            cout << "The pipe does not exist." << endl;
+                            cout << "Skipped invalid input: " << inputId << endl;
                         }
                     }
-                    break;
                 }
+                break;
             }
             else {
                 cout << "Enter 1 or 2." << endl;
             }
         }
-    }
-    else {
-        cout << "The pipes don't exist." << endl;
     }
 }
