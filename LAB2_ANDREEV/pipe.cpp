@@ -1,5 +1,4 @@
 #include "pipe.h"
-#pragma once
 
 map<int, pipe> Pipes;
 
@@ -57,12 +56,6 @@ bool pipe::isRepairing() const
 void pipe::setIsRepairing(bool t)
 {
 	repair = t;
-}
-
-bool isInteger(string const& str) {
-	istringstream iss(str);
-	int num;
-	return (iss >> num) && iss.eof();
 }
 
 string filterByName(string input) {

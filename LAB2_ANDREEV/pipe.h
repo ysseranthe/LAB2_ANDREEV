@@ -2,6 +2,7 @@
 #include <map>
 #include <iostream>
 #include <string>
+#include "isInteger.h"
 using namespace std;
 #pragma once
 
@@ -36,7 +37,6 @@ void pipeInfo(int id, const pipe p);
 void showPipes();
 void editPipe();
 void addNewPipe(int& i);
-bool isInteger(string const& str);
 void filterPipe();
 string filterByName(string input);
 string filterByRepair(string input);

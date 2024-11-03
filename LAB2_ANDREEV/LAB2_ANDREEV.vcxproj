@@ -128,11 +128,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cs.cpp" />
+    <ClCompile Include="file.cpp" />
+    <ClCompile Include="isInteger.cpp" />
     <ClCompile Include="LAB2_ANDREEV.cpp" />
     <ClCompile Include="pipe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cs.h" />
+    <ClInclude Include="file.h" />
+    <ClInclude Include="isInteger.h" />
     <ClInclude Include="pipe.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

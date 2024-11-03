@@ -2,10 +2,11 @@
 #include <fstream>
 #include "pipe.h"
 #include "cs.h"
+#include "file.h"
 using namespace std;
 
 int main() {
-    int i = 0;
+    int pipeId = 0, csId = 0;
     string input;
 
     while (true) {
@@ -19,16 +20,16 @@ int main() {
                 return 0;
             }
             case 1: {
-                addNewPipe(i);
+                addNewPipe(pipeId);
                 break;
             }
             case 2: {
-                //addNewCs(i);
+                addNewCs(csId);
                 break;
             }
             case 3: {
                 showPipes();
-                //showCss();
+                showCss();
                 break;
             }
             case 4: {
@@ -36,37 +37,33 @@ int main() {
                 break;
             }
             case 5: {
-                //filterCs();
+                filterCs();
                 break;
             }
             case 6: {
                 editPipe();
-                //cout << "Save" << endl;
-                //save(Pipe, Cs, pipeExists, csExists);
                 break;
             }
             case 7: {
-                //editCs();
+                editCs();
                 break;
             }
             case 8: {
-                //cout << "Load" << endl;
                 //load(Pipe, Cs, pipeExists, csExists);
                 break;
             }
             case 9: {
-                //cout << "Load" << endl;
-                //load(Pipe, Cs, pipeExists, csExists);
+                upload(pipeId, csId);
                 break;
             }
             default: {
-                cout << "Enter number from 0 to 7." << endl;
+                cout << "Enter number from 0 to 9." << endl;
                 break;
             }
             }
         }
         else {
-            cout << "Enter number from 0 to 7." << endl;
+            cout << "Enter number from 0 to 9." << endl;
         }
         cout << endl;
     }
