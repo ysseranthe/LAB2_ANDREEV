@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include "isInteger.h"
+//#include "isInteger.h"
 using namespace std;
 #pragma once
 

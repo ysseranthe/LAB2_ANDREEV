@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <chrono>
 #include <ctime>  
@@ -8,7 +9,14 @@
 #include "file.h"
 using namespace std;
 
+
 ofstream logFile;
+
+bool isInteger(string const& str) {
+    istringstream iss(str);
+    int num;
+    return (iss >> num) && iss.eof();
+}
 
 void upload(int& i, int& j) {
     string input, line, name, pipeLength, pipeDiameter, pipeRepair, workSt, numInWork, eff;

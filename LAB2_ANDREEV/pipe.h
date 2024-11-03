@@ -2,7 +2,7 @@
 #include <map>
 #include <iostream>
 #include <string>
-#include "isInteger.h"
+//#include "isInteger.h"
 using namespace std;
 #pragma once
 
